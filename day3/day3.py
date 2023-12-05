@@ -1,13 +1,8 @@
 with open('input.txt') as f:
   lines = [l+'.' for l in f.read().split('\n') if l]
 
-part_numbers = []
-signs = []
-number = []
-num_idxs = []
-gears = []
+part_numbers, signs, number, num_idxs, gears= [], [],[],[], []
 for row, l in enumerate(lines):
-
   last_is_digit = False
   for col, n in enumerate(l):
     if n.isdigit():
@@ -26,18 +21,15 @@ for row, l in enumerate(lines):
            gears.append([])
 
 sol1 = 0
-
 for value, idxs in part_numbers:
     for i, sign in enumerate(signs):
         sign_type, sign_loc = sign
-        # print([max(abs(sign[0] - idx[0]), abs(sign[1] - idx[1])) for idx in idxs])
         if any([max(abs(sign_loc[0] - idx[0]), abs(sign_loc[1] - idx[1])) < 2 for idx in idxs]) :
             sol1 += value
             if sign_type == '*':
                gears[i].append(value)
 
 sol2 = sum([g[0] * g[1] for g in gears if len(g)==2])
-
 print(sol1)   
 print(sol2)
         
